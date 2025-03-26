@@ -1,12 +1,11 @@
-import { FC} from 'react';
+import { Message } from 'primereact/message';
+import { FC } from 'react';
 
 
 const NotFoundPage: FC = () => {
 
   return (
-    <div>
-      <h2 style={{ color: 'red' }}>404 Page Not Found</h2>
-    </div>
+    <Message severity="error" text="404 Page Not Found" />
   );
 
 }

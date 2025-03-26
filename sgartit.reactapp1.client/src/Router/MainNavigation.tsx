@@ -13,6 +13,11 @@ const MainNavigation: FC = () => {
       command:  () => void navigate("/")
     },
     {
+      label: 'Count',
+      icon: 'pi pi-stopwatch',
+      command: () => void navigate("/count")
+    },
+    {
       label: 'About',
       icon: 'pi pi-info-circle',
       command: () => void navigate("/about")
