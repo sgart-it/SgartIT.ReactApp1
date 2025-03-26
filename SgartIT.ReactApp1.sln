@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server", "SgartIT.ReactApp1.Server\SgartIT.ReactApp1.Server.csproj", "{9891E010-7AD3-46DE-8207-2EF087564411}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "sgartit.reactapp1.client", "sgartit.reactapp1.client\sgartit.reactapp1.client.esproj", "{CA06AA26-7CA7-4728-A40F-261818E7C990}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.DTO", "SgartIT.ReactApp1.Server.DTO\SgartIT.ReactApp1.Server.DTO.csproj", "{FCFC9335-B2CF-46C8-8306-D02DE3D04411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.Repositories.SPOnline", "SgartIT.ReactApp1.Server.Repositories.SPOnline\SgartIT.ReactApp1.Server.Repositories.SPOnline.csproj", "{F64E9054-BEAD-4BCE-A438-69173FC1CA6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.Repositories.InMemory", "SgartIT.ReactApp1.Server.Repositories.InMemory\SgartIT.ReactApp1.Server.Repositories.InMemory.csproj", "{C52C300D-66AA-4820-BF56-0B86C2108C44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.Repositories.MsSql", "SgartIT.ReactApp1.Server.Repositories.MsSql\SgartIT.ReactApp1.Server.Repositories.MsSql.csproj", "{2C685593-B4C7-4B07-A005-6E841DF590AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.Repositories.MsSqlEf", "SgartIT.ReactApp1.Server.Repositories.MsSqlEF\SgartIT.ReactApp1.Server.Repositories.MsSqlEf.csproj", "{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SgartIT.ReactApp1.Server.Repositories.Sqlite", "SgartIT.ReactApp1.Server.Repositories.Sqlite\SgartIT.ReactApp1.Server.Repositories.Sqlite.csproj", "{C7470220-749A-4736-BDCA-0427A6BD221A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9891E010-7AD3-46DE-8207-2EF087564411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9891E010-7AD3-46DE-8207-2EF087564411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9891E010-7AD3-46DE-8207-2EF087564411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9891E010-7AD3-46DE-8207-2EF087564411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA06AA26-7CA7-4728-A40F-261818E7C990}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FCFC9335-B2CF-46C8-8306-D02DE3D04411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFC9335-B2CF-46C8-8306-D02DE3D04411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFC9335-B2CF-46C8-8306-D02DE3D04411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFC9335-B2CF-46C8-8306-D02DE3D04411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F64E9054-BEAD-4BCE-A438-69173FC1CA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64E9054-BEAD-4BCE-A438-69173FC1CA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64E9054-BEAD-4BCE-A438-69173FC1CA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64E9054-BEAD-4BCE-A438-69173FC1CA6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52C300D-66AA-4820-BF56-0B86C2108C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52C300D-66AA-4820-BF56-0B86C2108C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52C300D-66AA-4820-BF56-0B86C2108C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52C300D-66AA-4820-BF56-0B86C2108C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C685593-B4C7-4B07-A005-6E841DF590AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C685593-B4C7-4B07-A005-6E841DF590AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C685593-B4C7-4B07-A005-6E841DF590AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C685593-B4C7-4B07-A005-6E841DF590AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7470220-749A-4736-BDCA-0427A6BD221A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7470220-749A-4736-BDCA-0427A6BD221A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7470220-749A-4736-BDCA-0427A6BD221A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7470220-749A-4736-BDCA-0427A6BD221A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F64E9054-BEAD-4BCE-A438-69173FC1CA6D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C52C300D-66AA-4820-BF56-0B86C2108C44} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2C685593-B4C7-4B07-A005-6E841DF590AE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{F001BAB2-D922-4D2C-92A8-B0D53E8C15DE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C7470220-749A-4736-BDCA-0427A6BD221A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59A3A13D-0476-432B-9F49-0692899DA738}
+	EndGlobalSection
+EndGlobal

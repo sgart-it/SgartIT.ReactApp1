@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body {
+      font-size: 14pt;
+      color: #000;
+    }
+    *{
+      font-family: Helvetica, 'Times fonts', Courier;
+      color: #000;
+    }
+    h1{
+      font-size: 20pt;
+      color:#00f;
+    }
+    .filter {
+      margin: 1em 0;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+      .table th, .table td {
+        border: 1pt solid #000;
+        padding:.5em; 
+      }
+  </style>
+</head>
+<body>
+  <h1>Export PDF example</h1>
+  <div  class="filter">Filter: <strong>@@@text@@@</strong></div>
+  <table class="table">
+    <thead class="table">
+      <tr>
+        <th>Title</th>
+        <th>Completed</th>
+        <th>Category</th>
+        <th>Modified</th>
+      </tr>
+    </thead>
+    <tbody>@@@rows@@@</tbody>
+  </table>
+</body>
+</html>

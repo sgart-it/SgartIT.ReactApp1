@@ -1,0 +1,40 @@
+@SgartIT.ReactApp1.Server_HostAddress = https://localhost:7288
+
+
+GET {{SgartIT.ReactApp1.Server_HostAddress}}/api/todo?text=p
+Accept: application/json
+
+###
+
+GET {{SgartIT.ReactApp1.Server_HostAddress}}/api/todo/2
+Accept: application/json
+
+###
+
+POST {{SgartIT.ReactApp1.Server_HostAddress}}/api/todo
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "Prova B",
+    "isCompleted": false,
+    "category": "bb1"
+}
+
+###
+
+PATCH {{SgartIT.ReactApp1.Server_HostAddress}}/api/todo/2
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "Prova 2aaa",
+    "isCompleted": true,
+    "category": "ccc6"
+}
+###
+
+DELETE {{SgartIT.ReactApp1.Server_HostAddress}}/api/todo/1
+Accept: application/json
+
+###

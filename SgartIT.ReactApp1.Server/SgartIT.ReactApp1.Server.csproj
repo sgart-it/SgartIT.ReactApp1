@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SpaRoot>..\sgartit.reactapp1.client</SpaRoot>
+    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+    <SpaProxyServerUrl>https://localhost:52283</SpaProxyServerUrl>
+    <UserSecretsId>c5bc7387-042c-47df-af43-cf20b8439bdd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.1.0" />
+    <PackageReference Include="itext7.pdfhtml" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
+      <Version>9.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sgartit.reactapp1.client\sgartit.reactapp1.client.esproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.DTO\SgartIT.ReactApp1.Server.DTO.csproj" />
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.Repositories.InMemory\SgartIT.ReactApp1.Server.Repositories.InMemory.csproj" />
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.Repositories.MsSqlEF\SgartIT.ReactApp1.Server.Repositories.MsSqlEf.csproj" />
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.Repositories.MsSql\SgartIT.ReactApp1.Server.Repositories.MsSql.csproj" />
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.Repositories.SPOnline\SgartIT.ReactApp1.Server.Repositories.SPOnline.csproj" />
+    <ProjectReference Include="..\SgartIT.ReactApp1.Server.Repositories.Sqlite\SgartIT.ReactApp1.Server.Repositories.Sqlite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exports\Pdf\TodoItems.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PfxStore\certificate-SgartSPNet8ReactApp1-20250227225409.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AppData\" />
+  </ItemGroup>
+
+</Project>
