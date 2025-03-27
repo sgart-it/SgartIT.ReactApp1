@@ -48,3 +48,27 @@ export default tseslint.config({
   },
 })
 ```
+# .vscode
+
+launch.json
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "edge",
+      "request": "launch",
+      "name": "localhost (Edge)",
+      "url": "https://localhost:52283",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "localhost (Chrome)",
+      "url": "https://localhost:52283",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
+```
