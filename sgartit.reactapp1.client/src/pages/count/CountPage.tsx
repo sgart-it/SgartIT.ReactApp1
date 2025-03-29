@@ -12,7 +12,6 @@ const CountPage: FC = () => {
     dispatch,
   };
 
-
   return (
     <CouterContext.Provider value={providerState}>
       <div>
@@ -21,9 +20,9 @@ const CountPage: FC = () => {
         <hr />
         <Counter title="Contatore 1" />
         <hr />
-        <Counter title="Contatore 2" />
+        <Counter title="Contatore 2" quantity={2} />
         <hr />
-        <Counter title="Contatore 3" />
+        <Counter title="Contatore 3" quantity={3} />
         <hr />
         <Button onClick={()=> dispatch({ type: "reset" })}>Reset</Button>
       </div>
