@@ -1,7 +1,7 @@
 
 export type CountAction = {
-  type: 'increment' | 'decrement';
-  quantity: number;
+  type: 'increment' | 'decrement' | 'reset';
+  quantity?: number;
 };
 
 export type CountState = {
@@ -15,12 +15,17 @@ export const CounterReducer = (state: CountState, action: CountAction) => {
     case "increment":
       return {
         ...state,
-        count: state.count + quantity,
+        count: state.count + (quantity ?? 1)
       };
     case "decrement":
       return {
         ...state,
-        count: state.count - quantity,
+        count: state.count - (quantity ?? 1)
+      };
+    case "reset":
+      return {
+        ...state,
+        count: 0
       };
     default:
       return state;

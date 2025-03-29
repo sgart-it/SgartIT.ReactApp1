@@ -1,15 +1,17 @@
 import React, { Dispatch } from 'react';
 import { CountAction, CountState } from './CounterReducer';
 
-interface IContextProps {
+type ContextProps = {
   state: CountState;
   dispatch: Dispatch<CountAction>
-}
+};
 
-const CouterContext = React.createContext({} as IContextProps);
+const CouterContext = React.createContext({} as ContextProps);
 
-export function useCustomContext() {
-  return React.useContext(CouterContext);
+const useCounterContext = () => React.useContext(CouterContext);
+
+export {
+  useCounterContext
 }
 
 export default CouterContext;

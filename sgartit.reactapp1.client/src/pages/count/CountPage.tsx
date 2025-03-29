@@ -2,6 +2,7 @@ import { FC, useReducer } from 'react';
 import Counter from '../../components/counter/Counter';
 import { CounterReducer } from '../../reducer/CounterReducer';
 import CouterContext from '../../reducer/CounterContext';
+import { Button } from 'primereact/button';
 
 const CountPage: FC = () => {
   const [state, dispatch] = useReducer(CounterReducer, { count: 0 });
@@ -24,6 +25,7 @@ const CountPage: FC = () => {
         <hr />
         <Counter title="Contatore 3" />
         <hr />
+        <Button onClick={()=> dispatch({ type: "reset" })}>Reset</Button>
       </div>
     </CouterContext.Provider>
   );

@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { useCustomContext } from "../../reducer/CounterContext";
+import { useCounterContext } from "../../reducer/CounterContext";
 
 type CounterProps = {
   title: string;
 };
 
 const Counter: FC<CounterProps> = ({ title }) => {
-  const { state, dispatch } = useCustomContext();
+  const { state, dispatch } = useCounterContext();
 
   return (
     <div>
