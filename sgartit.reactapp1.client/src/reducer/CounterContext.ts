@@ -12,6 +12,6 @@ const useCounterContext = () => React.useContext(CouterContext);
 
 export {
   useCounterContext
-}
+};
 
 export default CouterContext;

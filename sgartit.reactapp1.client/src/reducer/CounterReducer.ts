@@ -13,27 +13,16 @@ export const CounterReducer = (state: CountState, action: CountAction) => {
 
   switch (type) {
     case "increment":
-      return {
-        ...state,
-        count: state.count + (quantity ?? 1)
-      };
+      return { ...state, count: state.count + (quantity ?? 1) };
     case "decrement":
       if (state.count - (quantity ?? 1) < 0) {
-        return {
-          ...state,
-          count: 0
-        };
+        return { ...state, count: 0 };
       }
-      return {
-        ...state,
-        count: state.count  - (quantity ?? 1)
-      };
+      return { ...state, count: state.count - (quantity ?? 1) };
     case "reset":
-      return {
-        ...state,
-        count: 0
-      };
+      return { ...state, count: 0 };
     default:
-      return state;
+      throw new Error(type);
+      //return state;
   }
 };

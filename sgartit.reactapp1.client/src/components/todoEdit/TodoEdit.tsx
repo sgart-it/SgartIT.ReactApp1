@@ -1,15 +1,14 @@
 import { JSX, useState } from 'react';
+import { useAppContext } from '../../reducer/AppContext';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Todo } from '../../models/Todo';
 import { InputSwitch } from 'primereact/inputswitch';
 
-type TodoEditProps = {
-  item?: Todo;
-  onComplete: (item?: Todo) => void;
-};
+export default function TodoEdit(): JSX.Element {
+  const { state, dispatch } = useAppContext();
+  const { selectedTodo: item } = state;
 
-export default function TodoEdit({ item, onComplete }: TodoEditProps): JSX.Element {
   const [title, setTitle] = useState<string>(item?.title ?? "");
   const [isCompleted, setIsCompleted] = useState<boolean>(item?.isCompleted ?? false);
   const [category, setCategory] = useState<string>(item?.category ?? "");
@@ -25,7 +24,7 @@ export default function TodoEdit({ item, onComplete }: TodoEditProps): JSX.Eleme
       modified: new Date(),
       created: item?.created ?? new Date()
     };
-    onComplete(editItem);
+    dispatch({ type: 'save-todo', value: editItem });
   };
 
   return (
@@ -34,7 +33,7 @@ export default function TodoEdit({ item, onComplete }: TodoEditProps): JSX.Eleme
       {isNew === false && <div><label>Completed</label> <InputSwitch checked={isCompleted} onChange={e => setIsCompleted(e.value)} /></div>}
       <div><label>Category</label> <InputText value={category} onChange={(e) => setCategory(e.target.value)} /></div>
       <div>*{isCompleted.toString()}*
-        <Button label="Cancel" icon="pi pi-refresh" onClick={() => onComplete()} />
+        <Button label="Cancel" icon="pi pi-refresh" onClick={() => dispatch({ type: 'set-show-edit', value: false })} />
         <Button label="Save" icon="pi pi-times" onClick={handleSave} />
 
       </div>

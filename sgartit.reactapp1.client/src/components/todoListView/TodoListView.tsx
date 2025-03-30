@@ -3,28 +3,23 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Todo } from "../../models/Todo";
 import { ShowDate } from "../showDate/ShowDate";
+import { useAppContext } from "../../reducer/AppContext";
 
-type TodoListViewProps = {
-  items: Todo[] | undefined,
-  selected: Todo | undefined;
-  onSelected: (item: Todo) => void
-}
+const TodoListView: FC = () => {
+  const { state, dispatch } = useAppContext();
+  const { todos, selectedTodo } = state;
 
-const TodoListView: FC<TodoListViewProps> = ({ items, selected, onSelected }) => {
-  const modifiedTemplate = (rowData: Todo) => {
-    return <ShowDate date={rowData.modified} />
-  };
-
+  const modifiedTemplate = (rowData: Todo) => <ShowDate date={rowData.modified} />;
   const createdTemplate = (rowData: Todo) => <ShowDate date={rowData.modified} />;
 
   return (
-    <DataTable value={items ?? []} tableStyle={{ minWidth: '50rem' }}
+    <DataTable value={todos ?? []} tableStyle={{ minWidth: '50rem' }}
       selectionMode={"single"}
       dataKey="id"
       metaKeySelection={false}
       emptyMessage=""
-      selection={selected}
-      onSelectionChange={e => onSelected(e.value as Todo)}
+      selection={selectedTodo}
+      onSelectionChange={e => dispatch({ type: 'set-selected-todo', value: e.value as Todo })}
     >
       <Column field="title" header="Title"></Column>
       <Column field="isCompleted" header="Completed"></Column>
