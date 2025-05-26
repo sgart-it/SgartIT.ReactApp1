@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SgartIT.ReactApp1.Server.DTO;
-using SgartIT.ReactApp1.Server.DTO.Settings;
 using SgartIT.ReactApp1.Server.Exports.Excel;
 using SgartIT.ReactApp1.Server.Exports.Pdf;
 using SgartIT.ReactApp1.Server.Services;
-using System.IO;
-using System.Net.Http.Headers;
 
 namespace SgartIT.ReactApp1.Server.Controllers;
 

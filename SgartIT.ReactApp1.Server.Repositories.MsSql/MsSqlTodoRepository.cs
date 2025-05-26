@@ -108,7 +108,6 @@ public class MsSqlTodoRepository(ILogger<MsSqlTodoRepository> logger, [FromKeyed
 
         const string query = "DELETE FROM Todos WHERE Id = @id";
 
-        // Update existing item
         using DatabaseContext ctx = GetDbContext();
         await ctx.ExecuteNonQuery(query, new() { { "@id", id } });
     }
