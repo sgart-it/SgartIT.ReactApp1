@@ -1,6 +1,6 @@
 # SgartIT.ReactApp1
 
-Demo app in React function components con supporto di più repositories (in memory, MsSql, MsSql Entity Framework, Sqlite e SharePoint Online)
+Demo app in React function components con supporto di più repositories (in memory, MsSql, MsSql Dapper, MsSql Entity Framework, Sqlite e SharePoint Online)
 
 Versione con **useReducer** e l'uso di **useEffect** (App.tsx) per gestire le chiamate asincrone.
 
