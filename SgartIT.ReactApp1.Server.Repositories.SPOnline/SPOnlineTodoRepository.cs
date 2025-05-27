@@ -121,7 +121,7 @@ public class SPOnlineTodoRepository(ILogger<SPOnlineTodoRepository> logger, IPnP
         else
         {
             IListItem listItem = await myList.Items.GetByIdAsync(id);
-            
+
             listItem[FLD_TITLE] = todo.Title;
             listItem[FLD_COMPLETED] = todo.IsCompleted;
             listItem[FLD_CATEGORY] = todo.Category;
@@ -129,7 +129,7 @@ public class SPOnlineTodoRepository(ILogger<SPOnlineTodoRepository> logger, IPnP
             await listItem.UpdateAsync();
         }
 
-        return new TodoId
+        return new TodoId(default)
         {
             Id = id
         };
@@ -152,18 +152,14 @@ public class SPOnlineTodoRepository(ILogger<SPOnlineTodoRepository> logger, IPnP
     }
 
 
-    private static Todo MapToTodo(IListItem listItem)
-    {
-        return new Todo
-        {
-            Id = listItem.Id,
-            Title = (string)(listItem[FLD_TITLE] ?? string.Empty),
-            IsCompleted = (bool)(listItem[FLD_COMPLETED] ?? false),
-            Category = (string)(listItem[FLD_CATEGORY] ?? string.Empty),
-            Created = (DateTime)listItem[FLD_CREATED],
-            Modified = (DateTime)listItem[FLD_MODIFIED]
-        };
-    }
+    private static Todo MapToTodo(IListItem listItem) => new(
+            listItem.Id,
+            (string)(listItem[FLD_TITLE] ?? string.Empty),
+            (string)(listItem[FLD_CATEGORY] ?? string.Empty),
+            (bool)(listItem[FLD_COMPLETED] ?? false),
+            (DateTime)listItem[FLD_CREATED],
+            (DateTime)listItem[FLD_MODIFIED]
+        );
 
     private async Task<IPnPContext> GetPnpContext()
     {

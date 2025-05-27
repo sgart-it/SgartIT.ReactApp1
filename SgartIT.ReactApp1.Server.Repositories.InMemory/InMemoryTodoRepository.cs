@@ -18,8 +18,8 @@ public class InMemoryTodoRepository(ILogger<InMemoryTodoRepository> logger, Data
         List<Todo> items = await dbContext.Todos
             .AsNoTracking()
             .Where(item => textLower == string.Empty
-                || item.Title.ToLower().Contains(textLower)
-                || item.Category.ToLower().Contains(textLower))
+                || item.Title.Contains(textLower, StringComparison.CurrentCultureIgnoreCase)
+                || item.Category.Contains(textLower, StringComparison.CurrentCultureIgnoreCase))
             .Select(item => MapToTodo(item))
             .ToListAsync();
 
@@ -67,7 +67,7 @@ public class InMemoryTodoRepository(ILogger<InMemoryTodoRepository> logger, Data
             await dbContext.SaveChangesAsync();
         }
 
-        return new TodoId
+        return new TodoId(default)
         {
             Id = id
         };
@@ -84,16 +84,5 @@ public class InMemoryTodoRepository(ILogger<InMemoryTodoRepository> logger, Data
         await dbContext.SaveChangesAsync();
     }
 
-    private static Todo MapToTodo(TodoEntity item)
-    {
-        return new Todo
-        {
-            Id = item.Id,
-            Title = item.Title,
-            IsCompleted = item.Completed,
-            Category = item.Category,
-            Created = item.CreationDate,
-            Modified = item.ModifyDate
-        };
-    }
+    private static Todo MapToTodo(TodoEntity item) => new(item.Id, item.Title, item.Category, item.Completed, item.CreationDate, item.ModifyDate);
 }

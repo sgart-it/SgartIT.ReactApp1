@@ -2,30 +2,17 @@
 
 namespace SgartIT.ReactApp1.Server.DTO;
 
-
 [DebuggerDisplay("Todo {Id}")]
-public class TodoId
-{
-    public int Id { get; set; }
-}
+public record TodoId(int Id);
 
 [DebuggerDisplay("Todo {Id}: {Title}")]
-public class TodoCreate
-{
-    public string Title { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-}
+public record TodoCreate(string Title, string Category);
 
 [DebuggerDisplay("Todo {Id}: {Title}")]
-public class TodoEdit : TodoCreate
-{
-    public bool IsCompleted { get; set; }
-}
+public record TodoEdit(string Title, string Category, bool IsCompleted) : TodoCreate(Title, Category);
 
-[DebuggerDisplay("Todo {Id}: {Title}")]
-public class Todo : TodoEdit
+[DebuggerDisplay("Todo {Id}: {Title}, completed: {IsCompleted}")]
+public record Todo(int Id, string Title, string Category, bool IsCompleted, DateTime Created, DateTime Modified) : TodoEdit(Title, Category, IsCompleted)
 {
-    public int Id { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime Modified { get; set; }
+    //public Todo() : this(default, default, default, default, default, default) { }
 }

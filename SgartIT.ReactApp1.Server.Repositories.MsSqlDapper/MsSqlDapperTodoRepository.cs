@@ -1,24 +1,25 @@
 ﻿using SgartIT.ReactApp1.Server.DTO;
 using Microsoft.Extensions.Logging;
 using SgartIT.ReactApp1.Server.DTO.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.Helpers;
-using Dapper;
-using System.Data;
+using SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.DBContexts;
 
 namespace SgartIT.ReactApp1.Server.Repositories.MsSqlDapper;
 
-public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger, [FromKeyedServices("MsSqlConnectionString")] string connectionString) : ITodoRepository
+public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger, DatabaseContext dbContext) : ITodoRepository
 {
 
     public async Task<List<Todo>> FindAsync(string? text)
     {
         logger.LogDebug("Getting all todos with text: {text}", text);
 
+        //  ERROR A parameterless default constructor or one matching signature
+        // ATTENZIONE: l'ordine dei campi, ed il nome, è importante per la serializzazione in JSON,
+        // per evitare di avere un ordine casuale
+        // e per evitare di dover usare [JsonPropertyName] su ogni campo della classe Todo
         const string query = """
-            SELECT Id, Title, Completed, Category, CreationDate AS Created, ModifyDate AS Modified
+            SELECT Id, Title, Category, Completed AS IsCompleted, CreationDate AS Created, ModifyDate AS Modified
             FROM Todos
-            WHERE Title LIKE @text OR Category LIKE @Text
+            WHERE Title LIKE @Text OR Category LIKE @Text
             ORDER BY Title
             """;
 
@@ -27,8 +28,9 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             Text = string.IsNullOrWhiteSpace(text) ? "%" : $"%{text}%"
         };
 
-        using IDbConnection cnn = Helper.GetConnection(connectionString);
-        return [.. await cnn.QueryAsync<Todo>(query, parameters)];
+        return [.. await dbContext.QueryAsync<Todo>(query, parameters)];
+        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
+        //return [.. await cnn.QueryAsync<Todo>(query, parameters)];
     }
 
 
@@ -37,18 +39,14 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
         logger.LogDebug("Getting todo with id: {id}", id);
 
         const string query = """
-            SELECT Id, Title, Completed, Category, CreationDate AS Created, ModifyDate AS Modified
+            SELECT Id, Title, Category, Completed AS IsCompleted, CreationDate AS Created, ModifyDate AS Modified
             FROM Todos
             WHERE Id = @Id
             """;
 
-        var parameters = new
-        {
-            Id = id
-        };
-
-        using IDbConnection cnn = Helper.GetConnection(connectionString);
-        return await cnn.QueryFirstAsync<Todo>(query, parameters);
+        return await dbContext.QueryFirstAsync<Todo>(query, new { id });
+        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
+        //return await cnn.QueryFirstAsync<Todo>(query, parameters);
     }
 
     public async Task<TodoId> SaveAsync(int id, TodoEdit todo)
@@ -65,21 +63,21 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             // insert new item
             var parameters = new
             {
-                todo.Title,
-                Completed = todo.IsCompleted,
+                todo.Title, // fa match con il nome della porprietà
+                Completed = todo.IsCompleted,   // in questo caso i nomi non coincidono
                 todo.Category,
                 CreationDate = DateTime.UtcNow
             };
-
-            using IDbConnection cnn = Helper.GetConnection(connectionString);
-            id = await cnn.QuerySingleAsync<int>(query, parameters);
+            id = await dbContext.QueryFirstAsync<int>(query, parameters);
+            //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
+            //id = await cnn.QuerySingleAsync<int>(query, parameters);
         }
         else
         {
             const string query = """
                 UPDATE Todos SET
                     Title = @Title, 
-                    Completed = @Completed, 
+                    Completed = @IsCompleted, 
                     Category = @Category, 
                     ModifyDate = @ModifyDate
                 WHERE Id = @Id
@@ -89,19 +87,17 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             {
                 Id = id,
                 todo.Title,
-                Completed = todo.IsCompleted,
+                todo.IsCompleted,
                 todo.Category,
                 ModifyDate = DateTime.UtcNow
             };
+            await dbContext.QueryAsync(query, parameters);
 
-            using IDbConnection cnn = Helper.GetConnection(connectionString);
-            await cnn.QueryAsync(query, parameters);
+            //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
+            //await cnn.QueryAsync(query, parameters);
         }
 
-        return new TodoId
-        {
-            Id = id
-        };
+        return new TodoId(id);
     }
 
 
@@ -111,13 +107,10 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
 
         const string query = "DELETE FROM Todos WHERE Id = @Id";
 
-        var parameters = new
-        {
-            Id = id
-        };
+        await dbContext.QueryAsync<Todo>(query, new { id });
 
-        using IDbConnection cnn = Helper.GetConnection(connectionString);
-        await cnn.QueryAsync(query, parameters);
+        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
+        //await cnn.QueryAsync(query, new { id });
     }
 
 }

@@ -17,9 +17,9 @@ public class MsSqlEfTodoRepository(ILogger<MsSqlEfTodoRepository> logger, Databa
 
         List<Todo> items = await dbContext.Todos
             .AsNoTracking()
-            .Where(item => textLower == string.Empty 
-                || item.Title.ToLower().Contains(textLower) 
-                || item.Category.ToLower().Contains(textLower))
+            .Where(item => textLower == string.Empty
+                || item.Title.Contains(textLower, StringComparison.CurrentCultureIgnoreCase)
+                || item.Category.Contains(textLower, StringComparison.CurrentCultureIgnoreCase))
             .Select(item => MapToTodo(item))
             .ToListAsync();
 
@@ -64,7 +64,7 @@ public class MsSqlEfTodoRepository(ILogger<MsSqlEfTodoRepository> logger, Databa
 
         await dbContext.SaveChangesAsync();
 
-        return new TodoId
+        return new TodoId(default)
         {
             Id = item.Id
         };
@@ -81,16 +81,6 @@ public class MsSqlEfTodoRepository(ILogger<MsSqlEfTodoRepository> logger, Databa
         await dbContext.SaveChangesAsync();
     }
 
-    private static Todo MapToTodo(TodoEntity item)
-    {
-        return new Todo
-        {
-            Id = item.Id,
-            Title = item.Title,
-            IsCompleted = item.Completed,
-            Category = item.Category,
-            Created = item.CreationDate,
-            Modified = item.ModifyDate
-        };
-    }
+    private static Todo MapToTodo(TodoEntity item) => new(item.Id, item.Title, item.Category, item.Completed, item.CreationDate, item.ModifyDate);
+
 }

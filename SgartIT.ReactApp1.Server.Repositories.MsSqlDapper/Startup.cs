@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SgartIT.ReactApp1.Server.DTO.Repositories;
+using SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.DBContexts;
 
 namespace SgartIT.ReactApp1.Server.Repositories.MsSqlDapper;
 
@@ -12,8 +13,9 @@ public static class Startup
     public static void Init(IHostApplicationBuilder builder)
     {
         string connectionString = builder.Configuration.GetValue<string>(APP_SETTINGS_KEY) ?? throw new Exception($"Invalid {APP_SETTINGS_KEY}");
-        
+
         builder.Services.AddKeyedSingleton<string>("MsSqlConnectionString", connectionString);
+        builder.Services.AddScoped<DatabaseContext>();
         builder.Services.AddScoped<ITodoRepository, MsSqlDapperTodoRepository>();
     }
 }

@@ -28,12 +28,7 @@ public class MainService(ILogger<MainService> logger, ITodoRepository repository
     {
         logger.LogDebug("Creating todo with title {Title}", todo.Title);
 
-        TodoEdit todoE = new()
-        {
-            Title = todo.Title,
-            Category = todo.Category,
-            IsCompleted = false
-        };
+        TodoEdit todoE = new(todo.Title, todo.Category, false);
 
         return await repository.SaveAsync(0, todoE);
     }

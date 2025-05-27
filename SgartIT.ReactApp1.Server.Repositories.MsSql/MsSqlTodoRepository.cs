@@ -95,7 +95,7 @@ public class MsSqlTodoRepository(ILogger<MsSqlTodoRepository> logger, [FromKeyed
              });
         }
 
-        return new TodoId
+        return new TodoId(default)
         {
             Id = id
         };
@@ -113,22 +113,18 @@ public class MsSqlTodoRepository(ILogger<MsSqlTodoRepository> logger, [FromKeyed
     }
 
 
-    private static Todo MapToTodo(SqlDataReader reader)
-    {
-        return new Todo
-        {
-            Id = reader.GetInt32(0),
-            Title = reader.GetString(1) ?? string.Empty,
-            IsCompleted = reader.GetBoolean(2),
-            Category = reader.GetString(3) ?? string.Empty,
-            Created = reader.GetDateTime(4),
-            Modified = reader.GetDateTime(5)
-        };
-    }
+    private static Todo MapToTodo(SqlDataReader reader) => new(
+            reader.GetInt32(0),
+            reader.GetString(1) ?? string.Empty,
+            reader.GetString(3) ?? string.Empty,
+            reader.GetBoolean(2),
+            reader.GetDateTime(4),
+            reader.GetDateTime(5)
+        );
 
     private DatabaseContext GetDbContext()
     {
-        return new (connectionString);
+        return new(connectionString);
     }
 
 }
