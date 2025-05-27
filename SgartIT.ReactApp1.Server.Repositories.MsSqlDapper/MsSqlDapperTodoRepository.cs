@@ -78,7 +78,10 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
         {
             const string query = """
                 UPDATE Todos SET
-                Title = @Title, Completed = @Completed, Category = @Category, ModifyDate = @ModifyDate
+                    Title = @Title, 
+                    Completed = @Completed, 
+                    Category = @Category, 
+                    ModifyDate = @ModifyDate
                 WHERE Id = @Id
                 """;
             // Update existing item
