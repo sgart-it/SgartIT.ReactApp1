@@ -1,10 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
-using SgartIT.ReactApp1.Server.DTO;
+﻿using SgartIT.ReactApp1.Server.DTO;
 using Microsoft.Extensions.Logging;
 using SgartIT.ReactApp1.Server.DTO.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.Helpers;
 using Dapper;
+using System.Data;
 
 namespace SgartIT.ReactApp1.Server.Repositories.MsSqlDapper;
 
@@ -27,7 +27,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             Text = string.IsNullOrWhiteSpace(text) ? "%" : $"%{text}%"
         };
 
-        using SqlConnection cnn = Helper.GetConnection(connectionString);
+        using IDbConnection cnn = Helper.GetConnection(connectionString);
         return [.. await cnn.QueryAsync<Todo>(query, parameters)];
     }
 
@@ -47,7 +47,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             Id = id
         };
 
-        using SqlConnection cnn = Helper.GetConnection(connectionString);
+        using IDbConnection cnn = Helper.GetConnection(connectionString);
         return await cnn.QueryFirstAsync<Todo>(query, parameters);
     }
 
@@ -71,7 +71,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
                 CreationDate = DateTime.UtcNow
             };
 
-            using SqlConnection cnn = Helper.GetConnection(connectionString);
+            using IDbConnection cnn = Helper.GetConnection(connectionString);
             id = await cnn.QuerySingleAsync<int>(query, parameters);
         }
         else
@@ -94,7 +94,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
                 ModifyDate = DateTime.UtcNow
             };
 
-            using SqlConnection cnn = Helper.GetConnection(connectionString);
+            using IDbConnection cnn = Helper.GetConnection(connectionString);
             await cnn.QueryAsync(query, parameters);
         }
 
@@ -116,7 +116,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             Id = id
         };
 
-        using SqlConnection cnn = Helper.GetConnection(connectionString);
+        using IDbConnection cnn = Helper.GetConnection(connectionString);
         await cnn.QueryAsync(query, parameters);
     }
 
