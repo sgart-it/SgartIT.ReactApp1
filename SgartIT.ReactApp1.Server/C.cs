@@ -5,7 +5,7 @@ public static class C
     /// <summary>
     /// Da aggiornare ad ogni nuova versione
     /// </summary>
-    public const string APP_VERSION = "1.2025-05-28";
+    public const string APP_VERSION = "1.2025-05-28.a";
     public const string APP_DESCRIPTION = "Demo app in React function components con supporto di più repositories (in memory, MsSql, MsSql Dapper, MsSql Entity Framework, Sqlite e SharePoint Online)\r\n";
 
 
