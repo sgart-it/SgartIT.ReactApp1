@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.InkML;
 using NLog;
 using NLog.Web;
 using SgartIT.ReactApp1.Server;
@@ -10,9 +9,14 @@ Logger? logger = null;
 try
 {
     logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-    logger.Info($"{C.LOG_START}: v.{C.VERSION}, {Environment.CommandLine}");
+    logger.Info($"{C.LOG_START}: v.{C.VERSION}, cmd: {Environment.CommandLine}");
+
+    // scrivo le date UTC e local per eventuali controlli ed evidenza ora legale/solare
+    DateTime now = DateTime.Now;
+    logger.Info($"NOW => utc: {now.ToUniversalTime():s}, local: {now:s}");
 
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
     logger.Info($"Env: {builder.Environment.EnvironmentName}");
 
     // NLog: Setup NLog for Dependency injection
