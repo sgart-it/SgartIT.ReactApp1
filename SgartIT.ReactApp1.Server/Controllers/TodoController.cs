@@ -17,21 +17,8 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     /// <param name="text"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Index(string? text)
-    {
-        try
-        {
-            logger.LogInformation("Find {text}", text);
-
-            return Ok(await main.FindAsync(text));
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Find {text}", text);
-
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
-    }
+    public async Task<IActionResult> Index(string? text) => Ok(await main.FindAsync(text));
+    
 
     /// <summary>
     /// GET: /todo/5
@@ -41,25 +28,14 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     [HttpGet("{id}")]
     public async Task<IActionResult> Details(int id)
     {
-        try
+        var todo = await main.GetAsync(id);
+
+        if (todo == null)
         {
-            logger.LogInformation("Get {id}", id);
-
-            var todo = await main.GetAsync(id);
-
-            if (todo == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(todo);
+            return NotFound();
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Get {id}", id);
 
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
+        return Ok(todo);
     }
 
     /// <summary>
@@ -70,22 +46,13 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     [HttpPost]
     public async Task<IActionResult> Create(TodoCreate todo)
     {
-        try
-        {
-            logger.LogInformation("Create {title}", todo.Title);
+        logger.LogInformation("Create {title}", todo.Title);
 
-            TodoId todoId = await main.CreateAsync(todo);
+        TodoId todoId = await main.CreateAsync(todo);
 
-            logger.LogInformation("Created {id}", todoId.Id);
+        logger.LogInformation("Created {id}", todoId.Id);
 
-            return Created("/api/todo", todoId);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Create {title}", todo.Title);
-
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
+        return Created("/api/todo", todoId);
     }
 
     /// <summary>
@@ -97,20 +64,9 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     [HttpPatch("{id}")]
     public async Task<IActionResult> Edit(int id, TodoEdit todo)
     {
-        try
-        {
-            logger.LogInformation("Edit {id}", id);
+        await main.UpdateAsync(id, todo);
 
-            await main.UpdateAsync(id, todo);
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Edit {id}", id);
-
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
+        return NoContent();
     }
 
     /// <summary>
@@ -123,20 +79,9 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        try
-        {
-            logger.LogInformation("Delete {id}", id);
+        await main.DeleteAsync(id);
 
-            await main.DeleteAsync(id);
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Delete {id}", id);
-
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
+        return NoContent();
     }
 
     [HttpGet("excel")]
@@ -158,6 +103,7 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
         }
         catch (Exception ex)
         {
+            // esempio di errore custom nel caso il default GlobalExceptionHandler non andasse bene
             logger.LogError(ex, "Excel find {text}", text);
 
             return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
@@ -167,24 +113,16 @@ public class TodoController(ILogger<MainService> logger, MainService main) : Con
     [HttpGet("pdf")]
     public async Task<IActionResult> PdfExport(string? text)
     {
-        try
-        {
-            List<Todo> items = await main.FindAsync(text);
+        logger.LogInformation("PDF export text: {text}", text);
+        List<Todo> items = await main.FindAsync(text);
 
-            PdfExport ex = new(logger);
-            byte[] contents = await ex.Export( items, text);
+        PdfExport ex = new(logger);
+        byte[] contents = await ex.Export(items, text);
 
-            DateTime dt = DateTime.Now;
-            Microsoft.Net.Http.Headers.MediaTypeHeaderValue headers = new("application/pdf");
-            //headers.Parameters.Add(new Microsoft.Net.Http.Headers.NameValueHeaderValue("Content-Disposition", $@"attachment;filename=""todo-{dt:yyyyMMddHHmmss}.pdf"""));
+        DateTime dt = DateTime.Now;
+        Microsoft.Net.Http.Headers.MediaTypeHeaderValue headers = new("application/pdf");
+        //headers.Parameters.Add(new Microsoft.Net.Http.Headers.NameValueHeaderValue("Content-Disposition", $@"attachment;filename=""todo-{dt:yyyyMMddHHmmss}.pdf"""));
 
-            return new FileContentResult(contents, headers);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "PDF find {text}", text);
-
-            return Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
-        }
+        return new FileContentResult(contents, headers);
     }
 }

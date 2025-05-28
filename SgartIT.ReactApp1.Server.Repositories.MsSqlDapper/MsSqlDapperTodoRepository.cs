@@ -29,8 +29,6 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
         };
 
         return [.. await dbContext.QueryAsync<Todo>(query, parameters)];
-        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
-        //return [.. await cnn.QueryAsync<Todo>(query, parameters)];
     }
 
 
@@ -44,14 +42,12 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
             WHERE Id = @Id
             """;
 
-        return await dbContext.QueryFirstAsync<Todo>(query, new { id });
-        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
-        //return await cnn.QueryFirstAsync<Todo>(query, parameters);
+        return await dbContext.QueryFirstOrDefaultAsync<Todo>(query, new { id });
     }
 
     public async Task<TodoId> SaveAsync(int id, TodoEdit todo)
     {
-        logger.LogDebug("Saving todo: {@todo}", todo);
+        logger.LogDebug("Saving todo: {@todo} with id: {id}", todo, id);
 
         if (id == 0)
         {
@@ -69,8 +65,6 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
                 CreationDate = DateTime.UtcNow
             };
             id = await dbContext.QueryFirstAsync<int>(query, parameters);
-            //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
-            //id = await cnn.QuerySingleAsync<int>(query, parameters);
         }
         else
         {
@@ -92,11 +86,7 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
                 ModifyDate = DateTime.UtcNow
             };
             await dbContext.QueryAsync(query, parameters);
-
-            //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
-            //await cnn.QueryAsync(query, parameters);
         }
-
         return new TodoId(id);
     }
 
@@ -108,9 +98,6 @@ public class MsSqlDapperTodoRepository(ILogger<MsSqlDapperTodoRepository> logger
         const string query = "DELETE FROM Todos WHERE Id = @Id";
 
         await dbContext.QueryAsync<Todo>(query, new { id });
-
-        //using IDbConnection cnn = DataBaseContext.GetConnection(connectionString);
-        //await cnn.QueryAsync(query, new { id });
     }
 
 }

@@ -5,7 +5,7 @@ public static class C
     /// <summary>
     /// Da aggiornare ad ogni nuova versione
     /// </summary>
-    public const string VERSION = "1.2025-05-26";
+    public const string VERSION = "1.2025-05-28";
 
     public const string LOG_START = "START";
     public const string LOG_STOP = "STOP";

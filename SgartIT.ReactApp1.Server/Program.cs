@@ -1,10 +1,11 @@
+using DocumentFormat.OpenXml.InkML;
 using NLog;
 using NLog.Web;
 using SgartIT.ReactApp1.Server;
 using SgartIT.ReactApp1.Server.DTO.Settings;
 using SgartIT.ReactApp1.Server.Handlers;
 
-Logger? logger= null;
+Logger? logger = null;
 
 try
 {
@@ -39,25 +40,43 @@ try
     // sequenza di caricamento dei middleware https://developmentwithadot.blogspot.com/2025/01/aspnet-core-middleware.html
     app.UseExceptionHandler();
 
-    app.UseDefaultFiles(); // serve per i progetti SPA
-    app.UseStaticFiles(); // serve per i progetti SPA
-
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         logger.Info("ENV IsDevelopment=true");
-
+        //app.UseExceptionHandler("/Error");
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    else
+    {
+        app.UseExceptionHandler("/Error");
+        app.UseHsts();
+    }
 
     app.UseHttpsRedirection();
+
+    //app.MapWhen(context => context.Request.Query.ContainsKey("branch"), HandleBranch);
+    //app.UseWhen(context => context.Request.Query.ContainsKey("branch"), appBuilder => HandleBranchAndRejoin(appBuilder));
+
+    app.UseDefaultFiles(); // serve per i progetti SPA
+    app.UseStaticFiles(); // serve per i progetti SPA
+
+    // app.UseCookiePolicy();
+    // app.UseRouting();
+    // app.UseRateLimiter();
+    // app.UseRequestLocalization();
 
     app.UseAppCors(logger, appSettings.Cors);
 
     app.UseAppMiddleware(logger);
 
+    //app.UseAuthentication();
     app.UseAuthorization();
+
+    // app.UseSession();
+    // app.UseResponseCompression();
+    // app.UseResponseCaching();
 
     app.MapControllers();
 

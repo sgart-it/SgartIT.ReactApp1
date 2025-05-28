@@ -15,14 +15,14 @@ namespace SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.DBContexts
 
         public async Task<IEnumerable<T>> QueryAsync<T>(string query, object? parameters = null, IDbTransaction? transaction = null)
         {
-            logger.LogDebug("Executing query: {query} with parameters: {@parameters}", query, parameters);
+            logger.LogTrace("Executing query: {query} with parameters: {@parameters}", query, parameters);
 
             using IDbConnection cnn = GetConnection();
             return await cnn.QueryAsync<T>(query, parameters, transaction);
         }
         public async Task<IEnumerable<dynamic>> QueryAsync(string query, object? parameters = null, IDbTransaction? transaction = null)
         {
-            logger.LogDebug("Executing query dynamic: {query} with parameters: {@parameters}", query, parameters);
+            logger.LogTrace("Executing query dynamic: {query} with parameters: {@parameters}", query, parameters);
 
             using IDbConnection cnn = GetConnection();
             return await cnn.QueryAsync<dynamic>(query, parameters, transaction);
@@ -30,15 +30,23 @@ namespace SgartIT.ReactApp1.Server.Repositories.MsSqlDapper.DBContexts
 
         public async Task<T> QueryFirstAsync<T>(string query, object? parameters = null, IDbTransaction? transaction = null)
         {
-            logger.LogDebug("Executing query first: {query} with parameters: {@parameters}", query, parameters);
+            logger.LogTrace("Executing query first: {query} with parameters: {@parameters}", query, parameters);
 
             using IDbConnection cnn = GetConnection();
             return await cnn.QueryFirstAsync<T>(query, parameters, transaction);
         }
 
+        public async Task<T?> QueryFirstOrDefaultAsync<T>(string query, object? parameters = null, IDbTransaction? transaction = null)
+        {
+            logger.LogTrace("Executing query first or default: {query} with parameters: {@parameters}", query, parameters);
+
+            using IDbConnection cnn = GetConnection();
+            return await cnn.QueryFirstOrDefaultAsync<T>(query, parameters, transaction);
+        }
+
         public async Task<IEnumerable<T>> StoreAsync<T>(string query, object? parameters = null, IDbTransaction? transaction = null)
         {
-            logger.LogDebug("Executing query: {query} with parameters: {@parameters}", query, parameters);
+            logger.LogTrace("Executing query: {query} with parameters: {@parameters}", query, parameters);
 
             using IDbConnection cnn = GetConnection();
             return await cnn.QueryAsync<T>(query, parameters, transaction, null, CommandType.StoredProcedure);

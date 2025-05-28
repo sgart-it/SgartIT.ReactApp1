@@ -1,4 +1,6 @@
-﻿namespace SgartIT.ReactApp1.Server.Middlewares;
+﻿using Microsoft.Extensions.Logging;
+
+namespace SgartIT.ReactApp1.Server.Middlewares;
 
 /// <summary>
 /// Middlewar di esempio che logga l'inizio e la fine di una richiesta
@@ -15,15 +17,27 @@ public class LogReqestMiddleware(ILogger<LogReqestMiddleware> logger) : IMiddlew
                 // sovrascrivo solo se non era già impostato
                 System.Diagnostics.Trace.CorrelationManager.ActivityId = Guid.NewGuid();
             }
+            logger.LogTrace(C.LOG_REQUEST_BEGIN);
 
-            logger.LogTrace(C.LOG_REQUEST_BEGIN + " {method} {path}{query}"
-                , context.Request.Method, context.Request.Path, context.Request.QueryString);
+            logger.LogDebug("CALL: {method} {scheme}://{host}{path}?{query} {protocol}, controller: {ctrl}, user: {user}"
+                , context.Request.Method
+                , context.Request.Scheme
+                , context.Request.Host
+                , context.Request.Path
+                , context.Request.QueryString
+                , context.Request.Protocol
+                , context.GetEndpoint()?.DisplayName
+                , context.User.Identity?.Name);
 
             await next(context);     // dovo ricordarmi di passare il controllo al prossimo middleware
 
             if (context.Response.StatusCode == 401)
             {
-                logger.LogWarning("401 Unauthorized");
+                logger.LogWarning("HTTP 401 Unauthorized");
+            }
+            else if (context.Response.StatusCode == 403)
+            {
+                logger.LogWarning("HTTP 403 Forbidden");
             }
         }
         catch (Exception ex)

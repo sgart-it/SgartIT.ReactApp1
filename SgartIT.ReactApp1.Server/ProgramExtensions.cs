@@ -130,6 +130,7 @@ public static class ProgramExtensions
 
 
     /// <summary>
+    /// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0
     /// https://developmentwithadot.blogspot.com/2025/01/aspnet-core-middleware.html
     /// </summary>
     /// <param name="app"></param>
